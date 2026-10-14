@@ -6,39 +6,62 @@
   <title>متتبع النزوح</title>
   <style>
     :root {
-      --bg: #f8fafc;
+      --bg: #f1f5f9;
+      --bg-grad: radial-gradient(circle at top right, #e2e8f0 0%, #f8fafc 60%);
       --card: #ffffff;
+      --card-alt: #f8fafc;
       --text: #0f172a;
+      --text-secondary: #334155;
       --muted: #64748b;
       --border: #e2e8f0;
       --accent: #0d9488;
+      --accent-dark: #0f766e;
       --accent-soft: #f0fdfa;
       --accent-border: #99f6e4;
       --danger: #e11d48;
       --danger-soft: #fff1f2;
       --danger-border: #fecdd3;
-      --shadow-sm: 0 1px 3px rgba(0,0,0,0.05);
-      --shadow-md: 0 4px 20px -2px rgba(15, 23, 42, 0.08);
-      --shadow-lg: 0 10px 25px -5px rgba(15, 23, 42, 0.1);
+      --amber: #d97706;
+      --amber-soft: #fffbeb;
+      --amber-border: #fde68a;
+      --blue: #2563eb;
+      --blue-soft: #eff6ff;
+      --blue-border: #bfdbfe;
+      --shadow-sm: 0 2px 6px rgba(15, 23, 42, 0.04);
+      --shadow-md: 0 8px 24px -4px rgba(15, 23, 42, 0.07);
+      --shadow-lg: 0 16px 36px -6px rgba(15, 23, 42, 0.12);
       --timeline-line: #cbd5e1;
+      --radius-lg: 24px;
+      --radius-md: 18px;
+      --radius-sm: 12px;
     }
 
     @media (prefers-color-scheme: dark) {
       :root {
-        --bg: #090d16;
+        --bg: #070b14;
+        --bg-grad: radial-gradient(circle at top right, #0f172a 0%, #070b14 70%);
         --card: #111827;
+        --card-alt: #1e293b;
         --text: #f8fafc;
+        --text-secondary: #cbd5e1;
         --muted: #94a3b8;
         --border: #1e293b;
         --accent: #2dd4bf;
-        --accent-soft: #042f2e;
-        --accent-border: #115e59;
+        --accent-dark: #14b8a6;
+        --accent-soft: rgba(20, 184, 166, 0.12);
+        --accent-border: rgba(45, 212, 191, 0.28);
         --danger: #fb7185;
-        --danger-soft: #4c0519;
-        --danger-border: #9f1239;
-        --shadow-sm: 0 1px 3px rgba(0,0,0,0.3);
-        --shadow-md: 0 4px 20px -2px rgba(0, 0, 0, 0.4);
-        --shadow-lg: 0 10px 30px -5px rgba(0, 0, 0, 0.6);
+        --danger-soft: rgba(244, 63, 94, 0.12);
+        --danger-border: rgba(251, 113, 133, 0.28);
+        --amber: #fbbf24;
+        --amber-soft: rgba(245, 158, 11, 0.12);
+        --amber-border: rgba(251, 191, 36, 0.28);
+        --blue: #60a5fa;
+        --blue-soft: rgba(59, 130, 246, 0.12);
+        --blue-border: rgba(96, 165, 250, 0.28);
+        --shadow-sm: 0 2px 6px rgba(0, 0, 0, 0.25);
+        --shadow-md: 0 8px 24px -4px rgba(0, 0, 0, 0.45);
+        --shadow-lg: 0 16px 36px -6px rgba(0, 0, 0, 0.65);
         --timeline-line: #334155;
       }
     }
@@ -46,109 +69,187 @@
     * { box-sizing: border-box; }
     body {
       margin: 0;
-      font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Noto Sans Arabic", sans-serif;
+      font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Noto Sans Arabic", Tahoma, sans-serif;
       background: var(--bg);
+      background-image: var(--bg-grad);
       color: var(--text);
-      line-height: 1.8;
+      line-height: 1.75;
       -webkit-font-smoothing: antialiased;
     }
 
     .container {
-      max-width: 980px;
+      max-width: 1020px;
       margin: 0 auto;
-      padding: 20px 16px 40px;
+      padding: 20px 16px 50px;
     }
 
     .no-js-banner {
       background: #b91c1c;
       color: #ffffff;
       padding: 16px;
-      border-radius: 14px;
+      border-radius: var(--radius-sm);
       margin-bottom: 20px;
       text-align: center;
       font-weight: 700;
-      line-height: 1.6;
     }
 
+    /* شريط تنبيه المحاكاة عند تفعيل تاريخ افتراضي */
+    .sim-banner {
+      display: none;
+      background: var(--amber-soft);
+      border: 1px solid var(--amber-border);
+      color: var(--amber);
+      padding: 10px 16px;
+      border-radius: var(--radius-sm);
+      margin-bottom: 16px;
+      font-size: 13.5px;
+      font-weight: 700;
+      align-items: center;
+      justify-content: space-between;
+      gap: 10px;
+      flex-wrap: wrap;
+    }
+    .sim-banner.show { display: flex; }
+
+    /* Hero Section */
     .hero {
-      background: linear-gradient(135deg, #115e59, #0d9488);
+      position: relative;
+      overflow: hidden;
+      background: linear-gradient(135deg, #0f3f3c 0%, #0f766e 55%, #0d9488 100%);
       color: #ffffff;
-      border-radius: 24px;
-      padding: 28px 24px;
+      border-radius: var(--radius-lg);
+      padding: 30px 26px;
       box-shadow: var(--shadow-lg);
-      margin-bottom: 20px;
-      display: flex;
-      flex-direction: column;
-      gap: 16px;
+      margin-bottom: 22px;
     }
 
-    .hero-header {
+    .hero::after {
+      content: '';
+      position: absolute;
+      top: -50%;
+      left: -10%;
+      width: 360px;
+      height: 360px;
+      background: radial-gradient(circle, rgba(255,255,255,0.12) 0%, transparent 70%);
+      pointer-events: none;
+    }
+
+    .hero-top {
       display: flex;
       justify-content: space-between;
       align-items: flex-start;
       flex-wrap: wrap;
-      gap: 16px;
+      gap: 18px;
+      position: relative;
+      z-index: 1;
+    }
+
+    .hero-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      background: rgba(255, 255, 255, 0.16);
+      border: 1px solid rgba(255, 255, 255, 0.25);
+      padding: 4px 12px;
+      border-radius: 99px;
+      font-size: 12px;
+      font-weight: 700;
+      margin-bottom: 10px;
+      backdrop-filter: blur(6px);
+    }
+
+    .hero-badge .dot {
+      width: 8px;
+      height: 8px;
+      border-radius: 50%;
+      background: #4ade80;
+      box-shadow: 0 0 8px #4ade80;
     }
 
     .hero h1 {
-      margin: 0 0 6px;
-      font-size: 28px;
-      font-weight: 800;
+      margin: 0 0 8px;
+      font-size: 30px;
+      font-weight: 900;
+      letter-spacing: -0.4px;
     }
 
     .hero p {
       margin: 0;
       color: rgba(255, 255, 255, 0.9);
-      font-size: 15px;
-      max-width: 650px;
+      font-size: 14.5px;
+      max-width: 620px;
+      line-height: 1.7;
+    }
+
+    .hero-actions {
+      display: flex;
+      gap: 8px;
+      flex-wrap: wrap;
     }
 
     .btn {
       appearance: none;
       border: none;
       font-family: inherit;
-      font-size: 14px;
+      font-size: 13.5px;
       font-weight: 700;
-      padding: 10px 20px;
-      border-radius: 12px;
+      padding: 10px 16px;
+      border-radius: var(--radius-sm);
       cursor: pointer;
       display: inline-flex;
       align-items: center;
-      gap: 8px;
-      background: #ffffff;
-      color: #0f766e;
-      box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+      gap: 6px;
       transition: all 0.2s ease;
     }
-    .btn:hover {
+
+    .btn-primary {
+      background: #ffffff;
+      color: #0f766e;
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+    }
+    .btn-primary:hover {
       background: #f0fdfa;
       transform: translateY(-1px);
     }
 
+    .btn-glass {
+      background: rgba(255, 255, 255, 0.15);
+      color: #ffffff;
+      border: 1px solid rgba(255, 255, 255, 0.28);
+      backdrop-filter: blur(8px);
+    }
+    .btn-glass:hover {
+      background: rgba(255, 255, 255, 0.25);
+      transform: translateY(-1px);
+    }
+
+    /* Highlight Bento Cards */
     .highlight {
       display: grid;
       grid-template-columns: 1fr 1fr;
       gap: 16px;
-      margin-bottom: 22px;
+      margin-bottom: 24px;
     }
 
     .big-card {
       background: var(--card);
       border: 1px solid var(--border);
-      border-radius: 22px;
-      padding: 22px;
+      border-radius: var(--radius-lg);
+      padding: 24px;
       box-shadow: var(--shadow-md);
       display: flex;
       flex-direction: column;
       justify-content: space-between;
+      position: relative;
+      overflow: hidden;
     }
 
     .big-card.primary {
-      background: linear-gradient(180deg, var(--card) 60%, var(--accent-soft));
+      background: linear-gradient(165deg, var(--card) 55%, var(--accent-soft));
       border-color: var(--accent-border);
     }
     .big-card.alert {
-      background: linear-gradient(180deg, var(--card) 60%, var(--danger-soft));
+      background: linear-gradient(165deg, var(--card) 55%, var(--danger-soft));
       border-color: var(--danger-border);
     }
 
@@ -156,32 +257,52 @@
       font-size: 14px;
       color: var(--muted);
       margin-bottom: 8px;
-      font-weight: 700;
+      font-weight: 800;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
     }
 
     .big-number {
-      font-size: 44px;
+      font-size: 46px;
       font-weight: 900;
       color: var(--accent);
       line-height: 1.1;
-      margin-bottom: 8px;
+      margin-bottom: 10px;
+      letter-spacing: -1px;
     }
     .big-card.alert .big-number { color: var(--danger); }
 
     .big-sub {
-      color: var(--muted);
+      color: var(--text-secondary);
       font-size: 13.5px;
-      line-height: 1.6;
+      line-height: 1.65;
     }
 
+    .current-station-pill {
+      margin-top: 14px;
+      padding: 8px 12px;
+      border-radius: var(--radius-sm);
+      background: var(--card);
+      border: 1px solid var(--accent-border);
+      font-size: 12.5px;
+      font-weight: 700;
+      color: var(--text-secondary);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 8px;
+    }
+
+    /* Progress Bar & Milestones */
     .milestone-progress {
       margin-top: 14px;
       padding-top: 12px;
       border-top: 1px dashed var(--danger-border);
     }
     .progress-bar-bg {
-      background: rgba(0,0,0,0.06);
-      height: 8px;
+      background: rgba(15, 23, 42, 0.08);
+      height: 9px;
       border-radius: 99px;
       overflow: hidden;
       margin-bottom: 6px;
@@ -190,31 +311,57 @@
       .progress-bar-bg { background: rgba(255,255,255,0.1); }
     }
     .progress-bar-fill {
-      background: linear-gradient(90deg, #f43f5e, #e11d48);
+      background: linear-gradient(90deg, #fb7185, #e11d48);
       height: 100%;
       border-radius: 99px;
-      transition: width 0.6s ease;
+      transition: width 0.5s ease;
     }
     .progress-labels {
       display: flex;
       justify-content: space-between;
       font-size: 12px;
-      font-weight: 700;
+      font-weight: 800;
       color: var(--muted);
     }
 
+    .completed-milestones {
+      margin-top: 8px;
+      display: flex;
+      flex-wrap: wrap;
+      gap: 6px;
+    }
+    .milestone-chip {
+      font-size: 11.5px;
+      font-weight: 700;
+      background: var(--card);
+      border: 1px solid var(--danger-border);
+      color: var(--danger);
+      padding: 2px 10px;
+      border-radius: 99px;
+    }
+
+    /* Section Headers */
+    .section-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 12px;
+      margin: 34px 0 16px;
+    }
     .section-title {
       font-size: 20px;
-      font-weight: 800;
-      margin: 32px 0 16px;
+      font-weight: 900;
+      margin: 0;
       display: flex;
       align-items: center;
       gap: 8px;
     }
 
+    /* Summary Grid */
     .grid {
       display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+      grid-template-columns: repeat(auto-fit, minmax(215px, 1fr));
       gap: 14px;
       margin-bottom: 24px;
     }
@@ -222,21 +369,37 @@
     .card {
       background: var(--card);
       border: 1px solid var(--border);
-      border-radius: 18px;
+      border-radius: var(--radius-md);
       padding: 18px;
       box-shadow: var(--shadow-sm);
+      transition: transform 0.2s ease, box-shadow 0.2s ease;
+    }
+    .card:hover {
+      transform: translateY(-2px);
+      box-shadow: var(--shadow-md);
+    }
+
+    .card-top {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 8px;
     }
 
     .card h2 {
-      margin: 0 0 8px;
-      font-size: 14px;
-      font-weight: 700;
+      margin: 0;
+      font-size: 13.5px;
+      font-weight: 800;
       color: var(--muted);
     }
 
+    .card-icon {
+      font-size: 18px;
+    }
+
     .metric {
-      font-size: 22px;
-      font-weight: 800;
+      font-size: 21px;
+      font-weight: 900;
       color: var(--accent);
       margin-bottom: 6px;
       line-height: 1.3;
@@ -244,13 +407,79 @@
 
     .sub {
       color: var(--muted);
-      font-size: 13px;
-      line-height: 1.5;
+      font-size: 12.5px;
+      line-height: 1.55;
+    }
+    .sub strong { color: var(--text); }
+
+    /* Analytical Split Cards (Shelter & North/South) */
+    .analytics-grid {
+      display: grid;
+      grid-template-columns: 1.15fr 0.85fr;
+      gap: 16px;
+      margin-bottom: 24px;
     }
 
+    .stacked-bar {
+      height: 12px;
+      border-radius: 99px;
+      overflow: hidden;
+      display: flex;
+      gap: 2px;
+      margin: 14px 0;
+      background: var(--card-alt);
+    }
+
+    .stacked-segment {
+      height: 100%;
+      transition: width 0.5s ease;
+    }
+
+    .shelter-list {
+      display: grid;
+      gap: 10px;
+    }
+
+    .shelter-item {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 10px 12px;
+      border-radius: var(--radius-sm);
+      background: var(--card-alt);
+      font-size: 13px;
+    }
+
+    .shelter-name {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      font-weight: 800;
+    }
+
+    .color-dot {
+      width: 10px;
+      height: 10px;
+      border-radius: 50%;
+      display: inline-block;
+    }
+
+    .shelter-meta {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      font-size: 12.5px;
+      color: var(--muted);
+    }
+    .shelter-meta strong {
+      color: var(--text);
+      font-size: 13.5px;
+    }
+
+    /* Geographic Grid */
     .geo-grid {
       display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(210px, 1fr));
+      grid-template-columns: repeat(auto-fit, minmax(215px, 1fr));
       gap: 14px;
       margin-bottom: 26px;
     }
@@ -270,15 +499,13 @@
     .geo-percent {
       color: var(--accent);
       font-size: 16px;
+      font-weight: 900;
     }
     .geo-bar-bg {
-      background: rgba(0,0,0,0.05);
-      height: 6px;
+      background: var(--card-alt);
+      height: 7px;
       border-radius: 99px;
       overflow: hidden;
-    }
-    @media (prefers-color-scheme: dark) {
-      .geo-bar-bg { background: rgba(255,255,255,0.08); }
     }
     .geo-bar-fill {
       background: var(--accent);
@@ -292,21 +519,80 @@
       color: var(--muted);
     }
 
+    /* Timeline Controls (Filters & Sort) */
+    .timeline-controls {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 10px;
+      margin-bottom: 18px;
+      background: var(--card);
+      padding: 12px 14px;
+      border-radius: var(--radius-md);
+      border: 1px solid var(--border);
+    }
+
+    .filter-pills {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 6px;
+    }
+
+    .pill {
+      appearance: none;
+      border: 1px solid var(--border);
+      background: var(--card-alt);
+      color: var(--text-secondary);
+      font-family: inherit;
+      font-size: 12.5px;
+      font-weight: 700;
+      padding: 6px 12px;
+      border-radius: 99px;
+      cursor: pointer;
+      transition: all 0.15s ease;
+    }
+    .pill:hover {
+      border-color: var(--accent);
+    }
+    .pill.active {
+      background: var(--accent);
+      color: #ffffff;
+      border-color: var(--accent);
+    }
+
+    .sort-btn {
+      appearance: none;
+      border: 1px solid var(--accent-border);
+      background: var(--accent-soft);
+      color: var(--accent);
+      font-family: inherit;
+      font-size: 12.5px;
+      font-weight: 800;
+      padding: 6px 14px;
+      border-radius: 99px;
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    /* Vertical Connected Timeline */
     .timeline {
       position: relative;
-      padding-right: 32px;
+      padding-right: 34px;
       display: flex;
       flex-direction: column;
-      gap: 16px;
+      gap: 14px;
     }
 
     .timeline::before {
       content: '';
       position: absolute;
-      top: 24px;
-      bottom: 24px;
+      top: 22px;
+      bottom: 22px;
       right: 12px;
-      width: 2px;
+      width: 2.5px;
       background: var(--timeline-line);
       border-radius: 2px;
     }
@@ -317,7 +603,7 @@
 
     .timeline-node {
       position: absolute;
-      right: -32px;
+      right: -34px;
       top: 20px;
       width: 26px;
       height: 26px;
@@ -329,7 +615,7 @@
       align-items: center;
       justify-content: center;
       font-size: 11px;
-      font-weight: 800;
+      font-weight: 900;
       color: var(--accent);
       box-shadow: 0 0 0 4px var(--bg);
     }
@@ -338,7 +624,6 @@
       background: var(--accent);
       color: #ffffff;
       border-color: #ffffff;
-      box-shadow: 0 0 0 0 rgba(13, 148, 136, 0.7);
       animation: pulse 2s infinite cubic-bezier(0.66, 0, 0, 1);
     }
 
@@ -351,13 +636,18 @@
     .timeline-card {
       background: var(--card);
       border: 1px solid var(--border);
-      border-radius: 18px;
+      border-radius: var(--radius-md);
       padding: 16px 20px;
       box-shadow: var(--shadow-sm);
+      transition: all 0.2s ease;
+    }
+    .timeline-card:hover {
+      border-color: var(--accent-border);
+      box-shadow: var(--shadow-md);
     }
     .timeline-item.active .timeline-card {
       border-color: var(--accent);
-      background: linear-gradient(180deg, var(--card) 80%, var(--accent-soft));
+      background: linear-gradient(180deg, var(--card) 75%, var(--accent-soft));
       box-shadow: var(--shadow-md);
     }
 
@@ -365,13 +655,13 @@
       display: flex;
       justify-content: space-between;
       align-items: flex-start;
-      gap: 12px;
+      gap: 10px;
       margin-bottom: 6px;
       flex-wrap: wrap;
     }
 
     .stage-title {
-      font-size: 16.5px;
+      font-size: 16px;
       font-weight: 800;
       margin: 0;
     }
@@ -380,12 +670,15 @@
       display: flex;
       gap: 6px;
       align-items: center;
+      flex-wrap: wrap;
     }
 
     .badge {
-      display: inline-block;
+      display: inline-flex;
+      align-items: center;
+      gap: 4px;
       padding: 3px 10px;
-      border-radius: 20px;
+      border-radius: 99px;
       font-size: 11.5px;
       font-weight: 700;
     }
@@ -393,6 +686,16 @@
       background: var(--accent-soft);
       color: var(--accent);
       border: 1px solid var(--accent-border);
+    }
+    .badge-house {
+      background: var(--blue-soft);
+      color: var(--blue);
+      border: 1px solid var(--blue-border);
+    }
+    .badge-tent {
+      background: var(--amber-soft);
+      color: var(--amber);
+      border: 1px solid var(--amber-border);
     }
     .badge-active {
       background: var(--danger-soft);
@@ -403,7 +706,15 @@
     .date-line {
       color: var(--muted);
       font-size: 13px;
-      margin-bottom: 10px;
+      margin-bottom: 12px;
+    }
+
+    .timeline-footer {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 12px;
     }
 
     .duration-tag {
@@ -414,41 +725,133 @@
       color: var(--accent);
       padding: 5px 12px;
       border-radius: 10px;
-      font-weight: 700;
-      font-size: 13.5px;
+      font-weight: 800;
+      font-size: 13px;
     }
     .timeline-item.active .duration-tag {
       background: var(--accent);
       color: #ffffff;
     }
 
-    .footer-note {
-      margin-top: 30px;
+    .weight-box {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      font-size: 12px;
       color: var(--muted);
-      font-size: 13.5px;
-      text-align: center;
+      font-weight: 700;
+      min-width: 140px;
+    }
+    .weight-bar-bg {
+      flex: 1;
+      height: 6px;
+      background: var(--card-alt);
+      border-radius: 99px;
+      overflow: hidden;
+      min-width: 60px;
+    }
+    .weight-bar-fill {
+      height: 100%;
+      background: var(--accent);
+      border-radius: 99px;
     }
 
-    @media (max-width: 768px) {
-      .highlight { grid-template-columns: 1fr; }
-      .hero { padding: 20px 18px; }
+    /* Footer & Debug Simulator */
+    .footer-area {
+      margin-top: 38px;
+      text-align: center;
+      color: var(--muted);
+      font-size: 13px;
+    }
+
+    .debug-toggle-btn {
+      margin-top: 10px;
+      background: transparent;
+      border: 1px dashed var(--border);
+      color: var(--muted);
+      padding: 5px 12px;
+      border-radius: 99px;
+      font-family: inherit;
+      font-size: 12px;
+      cursor: pointer;
+    }
+    .debug-toggle-btn:hover {
+      border-color: var(--accent);
+      color: var(--accent);
+    }
+
+    .debug-panel {
+      display: none;
+      margin-top: 16px;
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: var(--radius-md);
+      padding: 16px;
+      text-align: right;
+      box-shadow: var(--shadow-md);
+    }
+    .debug-panel.open { display: block; }
+
+    .debug-controls {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      align-items: center;
+      margin-top: 10px;
+    }
+
+    .date-input {
+      padding: 6px 10px;
+      border-radius: 8px;
+      border: 1px solid var(--border);
+      background: var(--card-alt);
+      color: var(--text);
+      font-family: inherit;
+      font-size: 13px;
+    }
+
+    /* Toast Notification */
+    .toast {
+      position: fixed;
+      bottom: 24px;
+      left: 50%;
+      transform: translateX(-50%) translateY(100px);
+      background: #0f172a;
+      color: #ffffff;
+      padding: 12px 22px;
+      border-radius: 99px;
+      font-size: 13.5px;
+      font-weight: 700;
+      box-shadow: var(--shadow-lg);
+      z-index: 999;
+      opacity: 0;
+      transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+      pointer-events: none;
+    }
+    .toast.show {
+      transform: translateX(-50%) translateY(0);
+      opacity: 1;
+    }
+
+    @media (max-width: 780px) {
+      .highlight, .analytics-grid { grid-template-columns: 1fr; }
+      .hero { padding: 22px 18px; }
       .hero h1 { font-size: 24px; }
-      .big-number { font-size: 36px; }
-      .metric { font-size: 20px; }
+      .big-number { font-size: 38px; }
       .timeline { padding-right: 28px; }
       .timeline-node { right: -28px; }
     }
 
     @media print {
       body { background: #ffffff !important; color: #000000 !important; }
-      .hero button, .no-js-banner { display: none !important; }
+      .hero-actions, .timeline-controls, .debug-toggle-btn, .debug-panel, .sim-banner, .no-js-banner {
+        display: none !important;
+      }
       .hero, .card, .big-card, .timeline-card {
         box-shadow: none !important;
         border: 1px solid #d1d5db !important;
         break-inside: avoid;
       }
-      .timeline::before { background: #9ca3af !important; }
-      .timeline-node { border-color: #4b5563 !important; }
       .timeline-item.active .timeline-node { animation: none !important; }
     }
   </style>
@@ -458,31 +861,53 @@
   <div class="container">
     <noscript>
       <div class="no-js-banner">
-        ⚠️ تنبيه: الجافاسكريبت معطّل في هذا العارض. يُرجى فتح الملف عبر متصفح الهاتف (مثل Google Chrome أو Samsung Internet) لتفعيل الحسابات التلقائية.
+        ⚠️ الجافاسكريبت معطّل في هذا العارض. يُرجى فتح الملف عبر متصفح الهاتف (مثل Chrome أو Samsung Internet).
       </div>
     </noscript>
 
+    <!-- شريط تنبيه يظهر فقط عند تفعيل وضع المحاكاة التاريخية -->
+    <div class="sim-banner" id="simBanner">
+      <span id="simBannerText">🛠️ وضع المحاكاة مفعّل</span>
+      <button class="pill active" onclick="resetSimulation()">العودة لتاريخ اليوم الفعلي</button>
+    </div>
+
+    <!-- Hero Header -->
     <div class="hero">
-      <div class="hero-header">
+      <div class="hero-top">
         <div>
+          <div class="hero-badge">
+            <span class="dot"></span>
+            <span>توثيق زمني وجغرافي حي</span>
+          </div>
           <h1>متتبع النزوح</h1>
-          <p>توثيق تفصيلي لمسار وأيام النزوح خلال الحرب، حساب المدد الزمنية، التوزيع الجغرافي، ورصد المحطات المرحلية تلقائياً.</p>
+          <p>يوثق هذا المتتبع مسار ومحطات النزوح خلال الحرب، ويحلل مدد الإقامة، طبيعة المأوى، التوزيع الجغرافي، والأهداف المرحلية تلقائياً.</p>
         </div>
-        <div>
-          <button class="btn" onclick="window.print()">
-            🖨️ حفظ كـ PDF / طباعة
+        <div class="hero-actions">
+          <button class="btn btn-primary" onclick="copyTextReport()">
+            📋 نسخ الملخص
+          </button>
+          <button class="btn btn-glass" onclick="downloadSummaryCard()">
+            🖼️ بطاقة صورة
+          </button>
+          <button class="btn btn-glass" onclick="window.print()">
+            🖨️ طباعة / PDF
           </button>
         </div>
       </div>
     </div>
 
+    <!-- Big Highlight Bento -->
     <div class="highlight">
       <div class="big-card primary">
         <div>
-          <div class="big-label">📍 اليوم الحالي من النزوح</div>
+          <div class="big-label">
+            <span>📍 اليوم الحالي من النزوح</span>
+            <span id="completedDaysBadge" style="font-size: 12px; color: var(--accent);"></span>
+          </div>
           <div class="big-number" id="currentDayNumber">—</div>
+          <div class="big-sub" id="currentDaySub"></div>
         </div>
-        <div class="big-sub" id="currentDaySub"></div>
+        <div class="current-station-pill" id="currentStationQuick"></div>
       </div>
 
       <div class="big-card alert">
@@ -499,259 +924,409 @@
             <span id="progressTargetText">الهدف القادم</span>
             <span id="progressPercent">0%</span>
           </div>
+          <div class="completed-milestones" id="completedMilestones"></div>
         </div>
       </div>
     </div>
 
-    <h2 class="section-title">📊 ملخص الإحصاءات العامة</h2>
+    <!-- General Summary Cards -->
+    <div class="section-header">
+      <h2 class="section-title">📊 ملخص الإحصاءات العامة</h2>
+    </div>
     <div class="grid" id="summaryCards"></div>
 
-    <h2 class="section-title">🗺️ التوزيع الجغرافي لأيام النزوح</h2>
+    <!-- Deep Analytics: Shelter Type & North vs South -->
+    <div class="section-header">
+      <h2 class="section-title">🏠 تحليل طبيعة المأوى والمسار الجغرافي</h2>
+    </div>
+    <div class="analytics-grid">
+      <div class="card">
+        <div class="card-top">
+          <h2>توزيع أيام النزوح حسب طبيعة المأوى</h2>
+          <span class="card-icon">🏕️</span>
+        </div>
+        <div class="stacked-bar" id="shelterStackedBar"></div>
+        <div class="shelter-list" id="shelterList"></div>
+      </div>
+
+      <div class="card">
+        <div class="card-top">
+          <h2>مؤشر التواجد: شمال الوادي ⇄ جنوب ووسط القطاع</h2>
+          <span class="card-icon">🧭</span>
+        </div>
+        <div class="stacked-bar" id="northSouthBar"></div>
+        <div class="shelter-list" id="northSouthList"></div>
+      </div>
+    </div>
+
+    <!-- Geographic Distribution by Governorate -->
+    <div class="section-header">
+      <h2 class="section-title">🗺️ التوزيع التفصيلي حسب المحافظة</h2>
+    </div>
     <div class="geo-grid" id="geoDistribution"></div>
 
-    <h2 class="section-title">🧭 تسلسل محطات النزوح خلال الحرب</h2>
+    <!-- Timeline Section -->
+    <div class="section-header">
+      <h2 class="section-title">⏳ تسلسل محطات النزوح خلال الحرب</h2>
+    </div>
+
+    <div class="timeline-controls">
+      <div class="filter-pills" id="filterPills">
+        <button class="pill active" data-filter="all">الكل (12)</button>
+        <button class="pill" data-filter="مدينة غزة">مدينة غزة</button>
+        <button class="pill" data-filter="مدينة رفح">مدينة رفح</button>
+        <button class="pill" data-filter="خان يونس والمواصي">خان يونس والمواصي</button>
+        <button class="pill" data-filter="دير البلح">دير البلح</button>
+        <button class="pill" data-filter="type:house">🏠 منازل وشقق</button>
+        <button class="pill" data-filter="type:tent">⛺ خيام وإيواء</button>
+      </div>
+      <button class="sort-btn" id="sortToggleBtn" onclick="toggleTimelineOrder()">
+        ⇅ الترتيب: الأقدم أولاً
+      </button>
+    </div>
+
     <div class="timeline" id="timeline"></div>
 
-    <div class="footer-note" id="footerNote"></div>
+    <!-- Footer & Debug Tool -->
+    <div class="footer-area">
+      <div id="footerNote"></div>
+      <button class="debug-toggle-btn" onclick="toggleDebugPanel()">
+        🛠️ أداة فحص التواريخ والمحاكاة (Debug)
+      </button>
+
+      <div class="debug-panel" id="debugPanel">
+        <div style="font-weight: 800; font-size: 14px; color: var(--text);">
+          🧪 محاكي التواريخ والحسابات (للمراجعة والاختبار قبل الاعتماد)
+        </div>
+        <div style="font-size: 12.5px; color: var(--muted); margin-top: 4px;">
+          اختر أي تاريخ لمعاينة كيف ستظهر البطاقات والألفيات ورسالة المئوية في ذلك اليوم:
+        </div>
+        <div class="debug-controls">
+          <input type="date" id="simDateInput" class="date-input" onchange="applyCustomSimDate(this.value)" />
+          <button class="pill" onclick="setSimulatedDayNumber(1000)">اليوم 1000</button>
+          <button class="pill" onclick="setSimulatedDayNumber(2000)">اليوم 2000</button>
+          <button class="pill" onclick="setSimulatedDayNumber(23275)">اليوم 23275 (الهدف الأخير)</button>
+          <button class="pill" onclick="applyCustomSimDate('2087-06-30')">بلوغ 100 عام (30/06/2087)</button>
+          <button class="pill active" onclick="resetSimulation()">العودة لليوم الحقيقي</button>
+        </div>
+      </div>
+    </div>
   </div>
 
+  <div class="toast" id="toastMsg">تم النسخ بنجاح</div>
+
   <script>
-    document.addEventListener("DOMContentLoaded", function () {
-      const warStart = new Date(2023, 9, 7);
-      const displacementStart = new Date(2023, 9, 10);
-      const hundredYearsDate = new Date(2087, 5, 30);
-      const finalDisplacementDayNumber = 23275;
-      const today = new Date();
-      today.setHours(0, 0, 0, 0);
+    const warStart = new Date(2023, 9, 7);
+    const displacementStart = new Date(2023, 9, 10);
+    const hundredYearsDate = new Date(2087, 5, 30);
+    const finalDisplacementDayNumber = 23275;
 
-      const stages = [
-        { title: 'بداية الحرب - في البيت', date: new Date(2023, 9, 7), details: 'صباح السبت', region: 'مدينة غزة' },
-        { title: 'النزوح إلى بيت أبو محمد الملاحي', date: new Date(2023, 9, 10), details: 'صباح الثلاثاء', region: 'مدينة غزة' },
-        { title: 'النزوح إلى بيت أبو محمد عفانة', date: new Date(2023, 9, 13), details: 'عصر الجمعة', region: 'مدينة رفح' },
-        { title: 'النزوح إلى منطقة العلم', date: new Date(2024, 3, 23), details: 'ظهر الثلاثاء', region: 'مدينة رفح' },
-        { title: 'النزوح إلى عشوائيات أصداء الشمالية', date: new Date(2024, 4, 28), details: 'ظهر الثلاثاء', region: 'خان يونس والمواصي' },
-        { title: 'النزوح إلى خيمة أبو ثائر أحمد في أصداء', date: new Date(2024, 7, 17), details: 'عصر السبت', region: 'خان يونس والمواصي' },
-        { title: 'النزوح إلى الدفيئة الزراعية قرب محطة المواصي', date: new Date(2024, 7, 20), details: 'ظهر الثلاثاء', region: 'خان يونس والمواصي' },
-        { title: 'النزوح إلى عشوائيات أصداء الشمالية', date: new Date(2024, 8, 9), details: 'ظهر الاثنين', region: 'خان يونس والمواصي' },
-        { title: 'النزوح إلى بيت أبو خالد الشيخ خليل', date: new Date(2025, 1, 19), details: 'عصر الأربعاء', region: 'مدينة غزة' },
-        { title: 'النزوح إلى شارع العيون قرب مستشفى الرنتيسي', date: new Date(2025, 4, 23), details: 'عصر الجمعة', region: 'مدينة غزة' },
-        { title: 'النزوح إلى دير البلح - المشاعلة - أرض العزايزة', date: new Date(2025, 8, 16), details: 'عصر الثلاثاء', region: 'دير البلح' },
-        { title: 'النزوح إلى غزة - تل الهوا - أرض العواشير', date: new Date(2025, 10, 21), details: 'صباح الجمعة', region: 'مدينة غزة' }
-      ];
+    let activeDate = new Date();
+    activeDate.setHours(0, 0, 0, 0);
+    let isSimulated = false;
+    let isNewestFirst = false;
+    let activeFilter = 'all';
 
-      function startOfDay(d) {
-        return new Date(d.getFullYear(), d.getMonth(), d.getDate());
+    // سجل المحطات مع المنطقة الجغرافية وطبيعة المأوى (شقة شارع العيون مصنفة ضمن المنازل والشقق)
+    const stages = [
+      { title: 'بداية الحرب - في البيت', date: new Date(2023, 9, 7), details: 'صباح السبت', region: 'مدينة غزة', shelterType: 'home', shelterLabel: '🏡 البيت الأساسي' },
+      { title: 'النزوح إلى بيت أبو محمد الملاحي', date: new Date(2023, 9, 10), details: 'صباح الثلاثاء', region: 'مدينة غزة', shelterType: 'house', shelterLabel: '🏠 منزل' },
+      { title: 'النزوح إلى بيت أبو محمد عفانة', date: new Date(2023, 9, 13), details: 'عصر الجمعة', region: 'مدينة رفح', shelterType: 'house', shelterLabel: '🏠 منزل' },
+      { title: 'النزوح إلى منطقة العلم', date: new Date(2024, 3, 23), details: 'ظهر الثلاثاء', region: 'مدينة رفح', shelterType: 'tent', shelterLabel: '⛺ مخيم / إيواء' },
+      { title: 'النزوح إلى عشوائيات أصداء الشمالية', date: new Date(2024, 4, 28), details: 'ظهر الثلاثاء', region: 'خان يونس والمواصي', shelterType: 'tent', shelterLabel: '⛺ خيمة / عشوائيات' },
+      { title: 'النزوح إلى خيمة أبو ثائر أحمد في أصداء', date: new Date(2024, 7, 17), details: 'عصر السبت', region: 'خان يونس والمواصي', shelterType: 'tent', shelterLabel: '⛺ خيمة' },
+      { title: 'النزوح إلى الدفيئة الزراعية قرب محطة المواصي', date: new Date(2024, 7, 20), details: 'ظهر الثلاثاء', region: 'خان يونس والمواصي', shelterType: 'greenhouse', shelterLabel: '🌿 دفيئة زراعية' },
+      { title: 'النزوح إلى عشوائيات أصداء الشمالية', date: new Date(2024, 8, 9), details: 'ظهر الاثنين', region: 'خان يونس والمواصي', shelterType: 'tent', shelterLabel: '⛺ خيمة / عشوائيات' },
+      { title: 'النزوح إلى بيت أبو خالد الشيخ خليل', date: new Date(2025, 1, 19), details: 'عصر الأربعاء', region: 'مدينة غزة', shelterType: 'house', shelterLabel: '🏠 منزل' },
+      { title: 'النزوح إلى شارع العيون قرب مستشفى الرنتيسي', date: new Date(2025, 4, 23), details: 'عصر الجمعة', region: 'مدينة غزة', shelterType: 'house', shelterLabel: '🏢 شقة سكنية' },
+      { title: 'النزوح إلى دير البلح - المشاعلة - أرض العزايزة', date: new Date(2025, 8, 16), details: 'عصر الثلاثاء', region: 'دير البلح', shelterType: 'tent', shelterLabel: '⛺ خيمة / أرض إيواء' },
+      { title: 'النزوح إلى غزة - تل الهوا - أرض العواشير', date: new Date(2025, 10, 21), details: 'صباح الجمعة', region: 'مدينة غزة', shelterType: 'tent', shelterLabel: '⛺ خيمة / أرض إيواء' }
+    ];
+
+    function startOfDay(d) {
+      return new Date(d.getFullYear(), d.getMonth(), d.getDate());
+    }
+
+    function addDays(d, days) {
+      const res = new Date(d);
+      res.setDate(res.getDate() + days);
+      return res;
+    }
+
+    function daysBetween(start, end) {
+      const a = startOfDay(start);
+      const b = startOfDay(end);
+      return Math.max(0, Math.round((b - a) / (1000 * 60 * 60 * 24)));
+    }
+
+    function diffYMD(start, end) {
+      let s = startOfDay(start);
+      let e = startOfDay(end);
+      if (e < s) return { years: 0, months: 0, days: 0 };
+
+      let years = e.getFullYear() - s.getFullYear();
+      let months = e.getMonth() - s.getMonth();
+      let days = e.getDate() - s.getDate();
+
+      if (days < 0) {
+        const prevMonthDays = new Date(e.getFullYear(), e.getMonth(), 0).getDate();
+        days += prevMonthDays;
+        months -= 1;
       }
-
-      function addDays(d, days) {
-        const res = new Date(d);
-        res.setDate(res.getDate() + days);
-        return res;
+      if (months < 0) {
+        months += 12;
+        years -= 1;
       }
+      return { years, months, days };
+    }
 
-      function daysBetween(start, end) {
-        const a = startOfDay(start);
-        const b = startOfDay(end);
-        return Math.round((b - a) / (1000 * 60 * 60 * 24));
+    function yearText(n) {
+      if (n === 1) return 'سنة';
+      if (n === 2) return 'سنتين';
+      if (n >= 3 && n <= 10) return `${n} سنوات`;
+      return `${n} سنة`;
+    }
+
+    function monthText(n) {
+      if (n === 1) return 'شهر';
+      if (n === 2) return 'شهرين';
+      if (n >= 3 && n <= 10) return `${n} شهور`;
+      return `${n} شهر`;
+    }
+
+    function dayText(n) {
+      if (n === 1) return 'يوم';
+      if (n === 2) return 'يومين';
+      if (n >= 3 && n <= 10) return `${n} أيام`;
+      return `${n} يوم`;
+    }
+
+    function remainingText(n) {
+      if (n === 1) return 'يوم واحد';
+      if (n === 2) return 'يومان';
+      if (n >= 3 && n <= 10) return `${n} أيام`;
+      return `${n} يومًا`;
+    }
+
+    function formatPeriodOnly(start, end) {
+      const p = diffYMD(start, end);
+      const parts = [];
+      if (p.years) parts.push(yearText(p.years));
+      if (p.months) parts.push(monthText(p.months));
+      if (p.days) parts.push(dayText(p.days));
+      return parts.length ? parts.join(' و') : '0 يوم';
+    }
+
+    function formatPrecise(start, end) {
+      const totalDays = daysBetween(start, end);
+      return `${formatPeriodOnly(start, end)} (${totalDays} يوم)`;
+    }
+
+    function formatStay(start, end) {
+      const totalDays = daysBetween(start, end);
+      if (totalDays > 30) {
+        return `${totalDays} يوم (${formatPeriodOnly(start, end)})`;
       }
+      if (totalDays === 2) return 'يومين';
+      if (totalDays >= 3 && totalDays <= 10) return `${totalDays} أيام`;
+      return `${totalDays} يوم`;
+    }
 
-      function diffYMD(start, end) {
-        let s = startOfDay(start);
-        let e = startOfDay(end);
-        let years = e.getFullYear() - s.getFullYear();
-        let months = e.getMonth() - s.getMonth();
-        let days = e.getDate() - s.getDate();
+    function toDateString(d) {
+      const dd = String(d.getDate()).padStart(2, '0');
+      const mm = String(d.getMonth() + 1).padStart(2, '0');
+      const yyyy = d.getFullYear();
+      return `${dd}/${mm}/${yyyy}`;
+    }
 
-        if (days < 0) {
-          const prevMonthDays = new Date(e.getFullYear(), e.getMonth(), 0).getDate();
-          days += prevMonthDays;
-          months -= 1;
+    function nextTargetDayNumber(cur) {
+      if (cur < 1000) return 1000;
+      const candidate = Math.ceil((cur + 1) / 1000) * 1000;
+      return Math.min(candidate, finalDisplacementDayNumber);
+    }
+
+    function targetDateFromDayNumber(dayNum) {
+      return addDays(displacementStart, dayNum - 1);
+    }
+
+    function computeDisplacementStats() {
+      const displacementStages = stages.slice(1);
+      const stays = displacementStages.map((stage, index) => {
+        const sourceIndex = index + 1;
+        const endDate = stages[sourceIndex + 1] ? stages[sourceIndex + 1].date : activeDate;
+        const cleanName = stage.title.replace(/^النزوح إلى\s*/, '');
+        return {
+          name: cleanName,
+          days: daysBetween(stage.date, endDate),
+          formatted: formatStay(stage.date, endDate)
+        };
+      });
+
+      let longest = stays[0];
+      let shortest = stays[0];
+      for (const item of stays) {
+        if (item.days > longest.days) longest = item;
+        if (item.days < shortest.days) shortest = item;
+      }
+      return { longest, shortest };
+    }
+
+    function computeGeographicAndShelterStats() {
+      const displacementStages = stages.slice(1);
+      const regionMap = {};
+      const shelterMap = {
+        house: { label: 'منازل وشقق سكنية', icon: '🏠', days: 0, stops: 0, color: '#2563eb' },
+        tent: { label: 'خيام وأراضي إيواء', icon: '⛺', days: 0, stops: 0, color: '#d97706' },
+        greenhouse: { label: 'دفيئات زراعية', icon: '🌿', days: 0, stops: 0, color: '#0d9488' }
+      };
+      const northSouth = {
+        north: { label: 'شمال الوادي (مدينة غزة)', days: 0, stops: 0, color: '#0d9488' },
+        south: { label: 'جنوب ووسط القطاع (رفح، خان يونس، دير البلح)', days: 0, stops: 0, color: '#e11d48' }
+      };
+
+      let totalDisplacementDays = 0;
+
+      displacementStages.forEach((stage, index) => {
+        const nextDate = displacementStages[index + 1] ? displacementStages[index + 1].date : activeDate;
+        const days = daysBetween(stage.date, nextDate);
+        totalDisplacementDays += days;
+
+        const reg = stage.region || 'أخرى';
+        if (!regionMap[reg]) {
+          regionMap[reg] = { name: reg, days: 0, stops: 0 };
         }
-        if (months < 0) {
-          months += 12;
-          years -= 1;
+        regionMap[reg].days += days;
+        regionMap[reg].stops += 1;
+
+        if (shelterMap[stage.shelterType]) {
+          shelterMap[stage.shelterType].days += days;
+          shelterMap[stage.shelterType].stops += 1;
         }
-        return { years, months, days };
-      }
 
-      function yearText(n) {
-        if (n === 1) return 'سنة';
-        if (n === 2) return 'سنتين';
-        if (n >= 3 && n <= 10) return `${n} سنوات`;
-        return `${n} سنة`;
-      }
-
-      function monthText(n) {
-        if (n === 1) return 'شهر';
-        if (n === 2) return 'شهرين';
-        if (n >= 3 && n <= 10) return `${n} شهور`;
-        return `${n} شهر`;
-      }
-
-      function dayText(n) {
-        if (n === 1) return 'يوم';
-        if (n === 2) return 'يومين';
-        if (n >= 3 && n <= 10) return `${n} أيام`;
-        return `${n} يوم`;
-      }
-
-      function remainingText(n) {
-        if (n === 1) return 'يوم واحد';
-        if (n === 2) return 'يومان';
-        if (n >= 3 && n <= 10) return `${n} أيام`;
-        return `${n} يومًا`;
-      }
-
-      function formatPeriodOnly(start, end) {
-        const p = diffYMD(start, end);
-        const parts = [];
-        if (p.years) parts.push(yearText(p.years));
-        if (p.months) parts.push(monthText(p.months));
-        if (p.days) parts.push(dayText(p.days));
-        return parts.length ? parts.join(' و') : '0 يوم';
-      }
-
-      function formatPrecise(start, end) {
-        const totalDays = daysBetween(start, end);
-        return `${formatPeriodOnly(start, end)} (${totalDays} يوم)`;
-      }
-
-      function formatStay(start, end) {
-        const totalDays = daysBetween(start, end);
-        if (totalDays > 30) {
-          return `${totalDays} يوم (${formatPeriodOnly(start, end)})`;
+        if (reg === 'مدينة غزة') {
+          northSouth.north.days += days;
+          northSouth.north.stops += 1;
+        } else {
+          northSouth.south.days += days;
+          northSouth.south.stops += 1;
         }
-        if (totalDays === 2) return 'يومين';
-        if (totalDays >= 3 && totalDays <= 10) return `${totalDays} أيام`;
-        return `${totalDays} يوم`;
-      }
+      });
 
-      function toDateString(d) {
-        const dd = String(d.getDate()).padStart(2, '0');
-        const mm = String(d.getMonth() + 1).padStart(2, '0');
-        const yyyy = d.getFullYear();
-        return `${dd}/${mm}/${yyyy}`;
-      }
+      const regions = Object.values(regionMap).map(r => ({
+        ...r,
+        percent: totalDisplacementDays > 0 ? Math.round((r.days / totalDisplacementDays) * 100) : 0
+      })).sort((a, b) => b.days - a.days);
 
-      function nextTargetDayNumber(cur) {
-        if (cur < 1000) return 1000;
-        const candidate = Math.ceil((cur + 1) / 1000) * 1000;
-        return Math.min(candidate, finalDisplacementDayNumber);
-      }
+      const shelters = Object.values(shelterMap).map(s => ({
+        ...s,
+        percent: totalDisplacementDays > 0 ? ((s.days / totalDisplacementDays) * 100).toFixed(1) : 0
+      }));
 
-      function targetDateFromDayNumber(dayNum) {
-        return addDays(displacementStart, dayNum - 1);
-      }
+      const nsList = Object.values(northSouth).map(ns => ({
+        ...ns,
+        percent: totalDisplacementDays > 0 ? ((ns.days / totalDisplacementDays) * 100).toFixed(1) : 0
+      }));
 
-      function computeDisplacementStats() {
-        const displacementStages = stages.slice(1);
-        const stays = displacementStages.map((stage, index) => {
-          const sourceIndex = index + 1;
-          const endDate = stages[sourceIndex + 1] ? stages[sourceIndex + 1].date : today;
-          const cleanName = stage.title.replace(/^النزوح إلى\s*/, '');
-          return {
-            name: cleanName,
-            days: daysBetween(stage.date, endDate),
-            formatted: formatStay(stage.date, endDate)
-          };
-        });
+      return { regions, shelters, nsList, totalDisplacementDays };
+    }
 
-        let longest = stays[0];
-        let shortest = stays[0];
-        for (const item of stays) {
-          if (item.days > longest.days) longest = item;
-          if (item.days < shortest.days) shortest = item;
-        }
-        return { longest, shortest };
-      }
-
-      function computeGeographicStats() {
-        const displacementStages = stages.slice(1);
-        const regionMap = {};
-        let totalDisplacementDays = 0;
-
-        displacementStages.forEach((stage, index) => {
-          const next = displacementStages[index + 1] ? displacementStages[index + 1].date : today;
-          const days = daysBetween(stage.date, next);
-          totalDisplacementDays += days;
-          const reg = stage.region || 'أخرى';
-          if (!regionMap[reg]) {
-            regionMap[reg] = { name: reg, days: 0, stops: 0 };
-          }
-          regionMap[reg].days += days;
-          regionMap[reg].stops += 1;
-        });
-
-        const regions = Object.values(regionMap).map(r => {
-          const percent = totalDisplacementDays > 0 ? Math.round((r.days / totalDisplacementDays) * 100) : 0;
-          return { ...r, percent };
-        }).sort((a, b) => b.days - a.days);
-
-        return { regions, totalDisplacementDays };
-      }
-
-      // 1. بطاقات الأيام والأهداف المرحلية
-      const displacementDays = daysBetween(displacementStart, today);
+    function renderAll() {
+      const displacementDays = daysBetween(displacementStart, activeDate);
       const currentDay = displacementDays + 1;
+      const lastStage = stages[stages.length - 1];
+      const currentStageDays = daysBetween(lastStage.date, activeDate);
 
-      document.getElementById('currentDayNumber').textContent = currentDay;
+      // 1. البطاقة الرئيسية
+      document.getElementById('currentDayNumber').textContent = `اليوم ${currentDay}`;
+      document.getElementById('completedDaysBadge').textContent = `${displacementDays} يوم مكتمل`;
       document.getElementById('currentDaySub').textContent =
-        `أنت الآن في اليوم ${currentDay} من النزوح، وقد مضى ${displacementDays} يومًا كاملًا منذ ${toDateString(displacementStart)}.`;
+        `مضى ${formatPeriodOnly(displacementStart, activeDate)} منذ الخروج من البيت في ${toDateString(displacementStart)}.`;
 
+      document.getElementById('currentStationQuick').innerHTML = `
+        <span>📍 المحطة الحالية: <strong>${lastStage.title.replace(/^النزوح إلى\s*/, '')}</strong></span>
+        <span style="color: var(--accent);">${currentStageDays} يوم</span>
+      `;
+
+      // 2. بطاقة المرحلة التالية والألفيات
       const remainingLabel = document.getElementById('remainingLabel');
       const remainingNumber = document.getElementById('remainingNumber');
       const remainingSub = document.getElementById('remainingSub');
       const progressWrapper = document.getElementById('progressWrapper');
+      const completedMilestonesEl = document.getElementById('completedMilestones');
 
-      if (startOfDay(today).getTime() >= startOfDay(hundredYearsDate).getTime()) {
+      if (startOfDay(activeDate).getTime() >= startOfDay(hundredYearsDate).getTime()) {
         remainingLabel.textContent = 'رسالة عند بلوغ 100 عام';
         remainingNumber.textContent = '100 عام';
         remainingSub.textContent = '100 عام من العمر: زمن كامل من النزوح والصبر والذاكرة.';
         progressWrapper.style.display = 'none';
       } else {
+        progressWrapper.style.display = 'block';
         const targetDayNumber = nextTargetDayNumber(currentDay);
         const remaining = targetDayNumber - currentDay;
         const targetDate = targetDateFromDayNumber(targetDayNumber);
 
-        remainingLabel.textContent = `المتبقي حتى اليوم ${targetDayNumber} من النزوح`;
+        remainingLabel.textContent = `🎯 المتبقي حتى اليوم ${targetDayNumber} من النزوح`;
         remainingNumber.textContent = remainingText(remaining);
-        remainingSub.textContent = `تصل إلى اليوم ${targetDayNumber} في ${toDateString(targetDate)}.`;
+        remainingSub.textContent = `تصل إلى اليوم ${targetDayNumber} من النزوح في تاريخ ${toDateString(targetDate)}.`;
 
         const prevMilestone = targetDayNumber <= 1000 ? 1 : targetDayNumber - 1000;
         const progressPercent = Math.min(100, Math.max(0, Math.round(((currentDay - prevMilestone) / (targetDayNumber - prevMilestone)) * 100)));
         document.getElementById('progressBarFill').style.width = `${progressPercent}%`;
         document.getElementById('progressPercent').textContent = `${progressPercent}%`;
-        document.getElementById('progressTargetText').textContent = `الهدف: اليوم ${targetDayNumber}`;
+        document.getElementById('progressTargetText').textContent = `المرحلة: ${prevMilestone === 1 ? 0 : prevMilestone} ← ${targetDayNumber}`;
+
+        // عرض الألفيات المكتملة
+        const completedCount = Math.floor(currentDay / 1000);
+        if (completedCount > 0) {
+          const chips = [];
+          const maxChipsToShow = Math.min(completedCount, 3);
+          for (let i = 1; i <= maxChipsToShow; i++) {
+            const mDay = i * 1000;
+            const mDate = toDateString(targetDateFromDayNumber(mDay));
+            chips.push(`<span class="milestone-chip">✓ اليوم ${mDay} (${mDate})</span>`);
+          }
+          if (completedCount > 3) {
+            chips.push(`<span class="milestone-chip">+${completedCount - 3} ألفيات سابقة</span>`);
+          }
+          completedMilestonesEl.innerHTML = chips.join('');
+        } else {
+          completedMilestonesEl.innerHTML = '';
+        }
       }
 
-      // 2. ملخص الإحصاءات العامة
+      // 3. بطاقات الملخص العام
       const displacementCount = stages.length - 1;
       const stats = computeDisplacementStats();
       const avgStay = displacementCount > 0 ? Math.round(displacementDays / displacementCount) : 0;
 
       const summaryCardsData = [
         {
-          title: 'مدة الحرب حتى اليوم',
-          value: formatPrecise(warStart, today),
-          sub: `من <strong>${toDateString(warStart)}</strong> حتى <strong>${toDateString(today)}</strong>`
+          title: 'مدة الحرب الإجمالية',
+          icon: '⏳',
+          value: formatPrecise(warStart, activeDate),
+          sub: `من <strong>${toDateString(warStart)}</strong> حتى <strong>${toDateString(activeDate)}</strong>`
         },
         {
           title: 'مدة النزوح خارج البيت',
-          value: formatPrecise(displacementStart, today),
-          sub: `من <strong>${toDateString(displacementStart)}</strong> حتى <strong>${toDateString(today)}</strong>`
+          icon: '🚶',
+          value: formatPrecise(displacementStart, activeDate),
+          sub: `من <strong>${toDateString(displacementStart)}</strong> حتى <strong>${toDateString(activeDate)}</strong>`
         },
         {
-          title: 'عدد الانتقالات ومعدل الإقامة',
-          value: `${displacementCount} محطات نزوح`,
-          sub: `متوسط البقاء: <strong>${avgStay} يوم</strong> في المحطة الواحدة`
+          title: 'عدد الانتقالات ومعدل البقاء',
+          icon: '🔄',
+          value: `${displacementCount} محطة نزوح`,
+          sub: `متوسط الإقامة: <strong>${avgStay} يوم</strong> لكل محطة`
         },
         {
           title: 'أطول مدة بقاء في النزوح',
+          icon: '📌',
           value: stats.longest.formatted,
           sub: `المكان: <strong>${stats.longest.name}</strong>`
         },
         {
           title: 'أقصر مدة بقاء في النزوح',
+          icon: '⚡',
           value: stats.shortest.formatted,
           sub: `المكان: <strong>${stats.shortest.name}</strong>`
         }
@@ -759,15 +1334,56 @@
 
       document.getElementById('summaryCards').innerHTML = summaryCardsData.map(c => `
         <div class="card">
-          <h2>${c.title}</h2>
+          <div class="card-top">
+            <h2>${c.title}</h2>
+            <span class="card-icon">${c.icon}</span>
+          </div>
           <div class="metric">${c.value}</div>
           <div class="sub">${c.sub}</div>
         </div>
       `).join('');
 
-      // 3. التوزيع الجغرافي
-      const geo = computeGeographicStats();
-      document.getElementById('geoDistribution').innerHTML = geo.regions.map(r => `
+      // 4. تحليل طبيعة المأوى ومؤشر الشمال والجنوب
+      const deepStats = computeGeographicAndShelterStats();
+
+      document.getElementById('shelterStackedBar').innerHTML = deepStats.shelters.map(s => `
+        <div class="stacked-segment" style="width: ${s.percent}%; background: ${s.color};" title="${s.label}: ${s.percent}%"></div>
+      `).join('');
+
+      document.getElementById('shelterList').innerHTML = deepStats.shelters.map(s => `
+        <div class="shelter-item">
+          <div class="shelter-name">
+            <span class="color-dot" style="background: ${s.color};"></span>
+            <span>${s.icon} ${s.label}</span>
+          </div>
+          <div class="shelter-meta">
+            <span>${s.stops} محطات</span>
+            <span>•</span>
+            <strong>${s.days} يوم (${s.percent}%)</strong>
+          </div>
+        </div>
+      `).join('');
+
+      document.getElementById('northSouthBar').innerHTML = deepStats.nsList.map(ns => `
+        <div class="stacked-segment" style="width: ${ns.percent}%; background: ${ns.color};"></div>
+      `).join('');
+
+      document.getElementById('northSouthList').innerHTML = deepStats.nsList.map(ns => `
+        <div class="shelter-item">
+          <div class="shelter-name">
+            <span class="color-dot" style="background: ${ns.color};"></span>
+            <span>${ns.label}</span>
+          </div>
+          <div class="shelter-meta">
+            <span>${ns.stops} محطات</span>
+            <span>•</span>
+            <strong>${ns.days} يوم (${ns.percent}%)</strong>
+          </div>
+        </div>
+      `).join('');
+
+      // 5. التوزيع الجغرافي للمحافظات
+      document.getElementById('geoDistribution').innerHTML = deepStats.regions.map(r => `
         <div class="card geo-card">
           <div class="geo-header">
             <span>📍 ${r.name}</span>
@@ -783,38 +1399,249 @@
         </div>
       `).join('');
 
-      // 4. الخط الزمني
-      document.getElementById('timeline').innerHTML = stages.map((stage, index) => {
+      // 6. الخط الزمني
+      renderTimeline(deepStats.totalDisplacementDays);
+
+      // 7. التذييل
+      document.getElementById('footerNote').textContent =
+        `آخر تحديث تلقائي حسب التاريخ المعتمد: ${toDateString(activeDate)}`;
+    }
+
+    function renderTimeline(totalDisplacementDays) {
+      const enriched = stages.map((stage, index) => {
         const next = stages[index + 1];
         const isCurrent = !next;
-        const durationText = next
-          ? formatStay(stage.date, next.date)
-          : `${formatStay(stage.date, today)} (حتى اليوم)`;
+        const endDate = next ? next.date : activeDate;
+        const stayDays = daysBetween(stage.date, endDate);
+        const weightPercent = (index === 0 || totalDisplacementDays <= 0)
+          ? 0
+          : Math.min(100, Math.round((stayDays / totalDisplacementDays) * 100));
+
+        return {
+          ...stage,
+          originalIndex: index + 1,
+          isCurrent,
+          endDate,
+          stayDays,
+          weightPercent,
+          durationText: next
+            ? formatStay(stage.date, next.date)
+            : `${formatStay(stage.date, activeDate)} (حتى اليوم)`
+        };
+      });
+
+      const filtered = enriched.filter(item => {
+        if (activeFilter === 'all') return true;
+        if (activeFilter === 'type:house') return item.shelterType === 'house' || item.shelterType === 'home';
+        if (activeFilter === 'type:tent') return item.shelterType === 'tent' || item.shelterType === 'greenhouse';
+        return item.region === activeFilter;
+      });
+
+      if (isNewestFirst) {
+        filtered.reverse();
+      }
+
+      const container = document.getElementById('timeline');
+      container.innerHTML = filtered.map(item => {
+        const badgeClass = (item.shelterType === 'house' || item.shelterType === 'home') ? 'badge-house' : 'badge-tent';
+        const periodRange = item.isCurrent
+          ? `من <strong>${toDateString(item.date)}</strong> حتى اليوم`
+          : `من <strong>${toDateString(item.date)}</strong> إلى <strong>${toDateString(item.endDate)}</strong>`;
 
         return `
-          <div class="timeline-item ${isCurrent ? 'active' : ''}">
-            <div class="timeline-node">${index + 1}</div>
+          <div class="timeline-item ${item.isCurrent ? 'active' : ''}">
+            <div class="timeline-node">${item.originalIndex}</div>
             <div class="timeline-card">
               <div class="timeline-card-header">
-                <h3 class="stage-title">${stage.title}</h3>
+                <h3 class="stage-title">${item.title}</h3>
                 <div class="tag-container">
-                  <span class="badge badge-region">📍 ${stage.region}</span>
-                  ${isCurrent ? '<span class="badge badge-active">✨ المحطة الحالية</span>' : ''}
+                  <span class="badge badge-region">📍 ${item.region}</span>
+                  <span class="badge ${badgeClass}">${item.shelterLabel}</span>
+                  ${item.isCurrent ? '<span class="badge badge-active">✨ المحطة الحالية</span>' : ''}
                 </div>
               </div>
-              <div class="date-line">${stage.details} • <strong>${toDateString(stage.date)}</strong></div>
-              <div>
-                <span class="duration-tag">⏱️ مدة الإقامة: ${durationText}</span>
+              <div class="date-line">${item.details} • ${periodRange}</div>
+              <div class="timeline-footer">
+                <span class="duration-tag">⏱️ مدة البقاء: ${item.durationText}</span>
+                ${item.originalIndex > 1 ? `
+                  <div class="weight-box">
+                    <span>${item.weightPercent}% من النزوح</span>
+                    <div class="weight-bar-bg">
+                      <div class="weight-bar-fill" style="width: ${item.weightPercent}%;"></div>
+                    </div>
+                  </div>
+                ` : '<span style="font-size:12px; color:var(--muted);">قبل النزوح</span>'}
               </div>
             </div>
           </div>
         `;
       }).join('');
+    }
 
-      // 5. تذييل الصفحة
-      document.getElementById('footerNote').textContent =
-        `آخر تحديث تلقائي حسب تاريخ جهازك: ${toDateString(today)}`;
+    function toggleTimelineOrder() {
+      isNewestFirst = !isNewestFirst;
+      document.getElementById('sortToggleBtn').textContent = isNewestFirst
+        ? '⇅ الترتيب: الأحدث أولاً'
+        : '⇅ الترتيب: الأقدم أولاً';
+      renderAll();
+    }
+
+    // تفعيل أزرار الفلترة
+    document.getElementById('filterPills').addEventListener('click', function (e) {
+      const btn = e.target.closest('.pill');
+      if (!btn) return;
+      document.querySelectorAll('#filterPills .pill').forEach(p => p.classList.remove('active'));
+      btn.classList.add('active');
+      activeFilter = btn.getAttribute('data-filter');
+      renderAll();
     });
+
+    function showToast(msg) {
+      const toast = document.getElementById('toastMsg');
+      toast.textContent = msg;
+      toast.classList.add('show');
+      setTimeout(() => toast.classList.remove('show'), 2800);
+    }
+
+    // نسخ ملخص نصي منسق للحافظة
+    function copyTextReport() {
+      const displacementDays = daysBetween(displacementStart, activeDate);
+      const currentDay = displacementDays + 1;
+      const stats = computeDisplacementStats();
+      const lastStage = stages[stages.length - 1];
+
+      const text = [
+        `📌 ملخص متتبع النزوح (${toDateString(activeDate)})`,
+        `• اليوم الحالي من النزوح: اليوم ${currentDay} (${displacementDays} يوم مكتمل)`,
+        `• مدة الحرب: ${formatPrecise(warStart, activeDate)}`,
+        `• مدة النزوح خارج البيت: ${formatPrecise(displacementStart, activeDate)}`,
+        `• عدد محطات النزوح: ${stages.length - 1} محطة`,
+        `• المحطة الحالية: ${lastStage.title.replace(/^النزوح إلى\s*/, '')} (${formatStay(lastStage.date, activeDate)})`,
+        `• أطول مدة بقاء: ${stats.longest.name} (${stats.longest.formatted})`,
+        `• أقصر مدة بقاء: ${stats.shortest.name} (${stats.shortest.formatted})`
+      ].join('\n');
+
+      if (navigator.clipboard && navigator.clipboard.writeText) {
+        navigator.clipboard.writeText(text).then(() => {
+          showToast('✅ تم نسخ الملخص النصي إلى الحافظة');
+        });
+      } else {
+        const ta = document.createElement('textarea');
+        ta.value = text;
+        document.body.appendChild(ta);
+        ta.select();
+        document.execCommand('copy');
+        document.body.removeChild(ta);
+        showToast('✅ تم نسخ الملخص النصي');
+      }
+    }
+
+    // توليد بطاقة صورة عالية الدقة عبر HTML5 Canvas الأصيل بدون أي مكتبة خارجية
+    function downloadSummaryCard() {
+      const canvas = document.createElement('canvas');
+      canvas.width = 1080;
+      canvas.height = 760;
+      const ctx = canvas.getContext('2d');
+
+      const displacementDays = daysBetween(displacementStart, activeDate);
+      const currentDay = displacementDays + 1;
+      const stats = computeDisplacementStats();
+      const lastStage = stages[stages.length - 1];
+
+      // الخلفية
+      const grad = ctx.createLinearGradient(0, 0, 1080, 760);
+      grad.addColorStop(0, '#0f3f3c');
+      grad.addColorStop(1, '#091526');
+      ctx.fillStyle = grad;
+      ctx.fillRect(0, 0, 1080, 760);
+
+      ctx.direction = 'rtl';
+      ctx.textAlign = 'right';
+
+      // العنوان
+      ctx.fillStyle = '#2dd4bf';
+      ctx.font = 'bold 42px Tahoma, Arial, sans-serif';
+      ctx.fillText('متتبع النزوح — بطاقة التوثيق الزمني', 1020, 80);
+
+      ctx.fillStyle = '#94a3b8';
+      ctx.font = '22px Tahoma, Arial, sans-serif';
+      ctx.fillText(`تاريخ التقرير: ${toDateString(activeDate)}`, 1020, 122);
+
+      // صندوق اليوم الحالي
+      ctx.fillStyle = 'rgba(255, 255, 255, 0.07)';
+      ctx.fillRect(60, 160, 960, 150);
+
+      ctx.fillStyle = '#f8fafc';
+      ctx.font = 'bold 26px Tahoma, Arial, sans-serif';
+      ctx.fillText('اليوم الحالي من النزوح:', 990, 215);
+
+      ctx.fillStyle = '#2dd4bf';
+      ctx.font = 'bold 56px Tahoma, Arial, sans-serif';
+      ctx.fillText(`اليوم ${currentDay}`, 990, 282);
+
+      ctx.fillStyle = '#cbd5e1';
+      ctx.font = '24px Tahoma, Arial, sans-serif';
+      ctx.fillText(`مدة النزوح: ${formatPrecise(displacementStart, activeDate)}`, 580, 282);
+
+      // إحصاءات مفصلة
+      const rows = [
+        `• مدة الحرب الإجمالية: ${formatPrecise(warStart, activeDate)}`,
+        `• إجمالي محطات النزوح: ${stages.length - 1} محطة`,
+        `• المحطة الحالية: ${lastStage.title.replace(/^النزوح إلى\s*/, '')} (${formatStay(lastStage.date, activeDate)})`,
+        `• أطول مدة إقامة: ${stats.longest.name} — ${stats.longest.formatted}`,
+        `• أقصر مدة إقامة: ${stats.shortest.name} — ${stats.shortest.formatted}`
+      ];
+
+      ctx.fillStyle = '#f1f5f9';
+      ctx.font = '26px Tahoma, Arial, sans-serif';
+      rows.forEach((line, i) => {
+        ctx.fillText(line, 1000, 385 + i * 62);
+      });
+
+      const link = document.createElement('a');
+      link.download = `nuzuh-card-${toDateString(activeDate).replace(/\//g, '-')}.png`;
+      link.href = canvas.toDataURL('image/png');
+      link.click();
+      showToast('🖼️ تم تحميل بطاقة الصورة بنجاح');
+    }
+
+    // دوال أداة الفحص والمحاكاة (Debug Mode)
+    function toggleDebugPanel() {
+      document.getElementById('debugPanel').classList.toggle('open');
+    }
+
+    function applyCustomSimDate(val) {
+      if (!val) return;
+      const parts = val.split('-');
+      activeDate = new Date(Number(parts[0]), Number(parts[1]) - 1, Number(parts[2]));
+      isSimulated = true;
+      document.getElementById('simBanner').classList.add('show');
+      document.getElementById('simBannerText').textContent =
+        `🛠️ وضع المحاكاة مفعّل: تعرض الصفحة الآن الحسابات كما ستظهر في تاريخ ${toDateString(activeDate)}`;
+      renderAll();
+    }
+
+    function setSimulatedDayNumber(dayNum) {
+      const target = targetDateFromDayNumber(dayNum);
+      const yyyy = target.getFullYear();
+      const mm = String(target.getMonth() + 1).padStart(2, '0');
+      const dd = String(target.getDate()).padStart(2, '0');
+      const iso = `${yyyy}-${mm}-${dd}`;
+      document.getElementById('simDateInput').value = iso;
+      applyCustomSimDate(iso);
+    }
+
+    function resetSimulation() {
+      activeDate = new Date();
+      activeDate.setHours(0, 0, 0, 0);
+      isSimulated = false;
+      document.getElementById('simBanner').classList.remove('show');
+      document.getElementById('simDateInput').value = '';
+      renderAll();
+    }
+
+    // التشغيل الفوري
+    renderAll();
   </script>
 </body>
 </html>
